@@ -2,6 +2,20 @@
 # Cookbook Name:: mysql-test-schema
 # Recipe:: employees
 #
+# Copyright 2015, Ovais Tariq <me@ovaistariq.net>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 
 # Setup file paths
 src_filename = node["mysql_test_schema"]["employee"]["dump_filename"]
@@ -15,7 +29,7 @@ if node["mysql_test_schema"].attribute?("use_encrypted_databag") && node["mysql_
 
     mysql_root_pass = mysql_user_credentials["root"]
 else
-    # Otherwise we try to fetch the mysql root user password 
+    # Otherwise we try to fetch the mysql root user password
     # from a node attribute
     mysql_root_pass = node["mysql"]["root_password"]
 end
@@ -44,7 +58,7 @@ bash "extract_employee_db_dump_archive" do
   notifies :run, "bash[load_employee_db_dump_mysql]", :immediately
 end
 
-# Load the employees db dump 
+# Load the employees db dump
 bash "load_employee_db_dump_mysql" do
   action :nothing
   user "root"
